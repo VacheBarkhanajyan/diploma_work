@@ -1,0 +1,10 @@
+*.wlf
+*.swp
+*.log
+*.o
+work/
+design.bin
+qwave.db
+results/
+.vscode
+transaction.config

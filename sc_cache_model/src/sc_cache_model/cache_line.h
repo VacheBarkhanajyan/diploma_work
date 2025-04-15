@@ -1,12 +1,3 @@
-/*
-----------------------------------------
- Copyright (C) 2024 Grovf Inc. All Rights Reserved.
-
- Contributors:
- D.Margaryan david.m@grovf.com
------------------------------------------
-*/
-
 #ifndef CACHELINE_H
 #define CACHELINE_H
 

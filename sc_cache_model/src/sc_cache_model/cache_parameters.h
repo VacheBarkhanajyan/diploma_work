@@ -1,23 +1,13 @@
-/*
-----------------------------------------
- Copyright (C) 2024 Grovf Inc. All Rights Reserved.
-
- Contributors:
- D.Margaryan david.m@grovf.com
------------------------------------------
-*/
-
 #ifndef CACHEPARAMETERS_H
 #define CACHEPARAMETERS_H
 
 #include <utility>
 #include <unordered_map>
 
+#include "argparse.hpp"
 
 typedef std::pair<uint32_t, uint32_t> addr_range_t;
 
-// TODO: this shall be run-time setting. I.e. in real device this could change
-//       during normal operation
 enum WRITE_POLICY {
     WRITE_THROUGH,
     WRITE_BACK,
@@ -68,6 +58,24 @@ struct cache_params {
     unsigned int   cache_flush_delay;
 
     WRITE_POLICY write_policy;
+
+};
+
+
+struct test_args : public argparse::Args {
+
+    std::string &verbosity_level          = kwarg("verbosity_level", "parameter for choosing saving logs");
+    std::string &test_name                = kwarg("test_name", "parameter for choosing test to execute");
+    std::string &cache_size               = kwarg("cache_size", "parameter for choosing cache memory size");
+    std::string &line_size                = kwarg("line_size", "parameter for choosing cache memory line size");
+    std::string &set_assoc_count          = kwarg("set_assoc_count", "parameter for choosing cache memory set associative count");
+    std::string &word_size                = kwarg("word_size", "parameter for choosing cache memory line word size");
+
+    std::string &memory_read_delay        = kwarg("memory_read_delay", "parameter for choosing main memory(RAM) read delay");
+    std::string &memory_write_delay       = kwarg("memory_write_delay", "parameter for choosing main memory(RAM) write delay");
+    std::string &cache_read_delay         = kwarg("cache_read_delay", "parameter for choosing cache memory read delay");
+    std::string &cache_write_delay        = kwarg("cache_write_delay", "parameter for choosing cache memory write delay");
+    std::string &cache_invalidate_delay   = kwarg("cache_invalidate_delay", "parameter for choosing cache memory invalidate delay");
 
 };
 

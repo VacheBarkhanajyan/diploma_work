@@ -69,7 +69,7 @@ void cache_memory::print_cache(uint64_t address) {
         report += "\n  Cache line with tag " + std::to_string(tag) + " not found in set " + std::to_string(index) + ".";
     }
 
-    SC_REPORT_INFO_VERB("CACHE_MEMORY", report.c_str(), sc_core::SC_MEDIUM);
+    SC_REPORT_INFO_VERB("CACHE_MEMORY", report.c_str(), sc_core::SC_HIGH);
 }
 
 

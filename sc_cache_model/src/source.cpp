@@ -7,30 +7,24 @@
 #include "base_test.h"
 
 int sc_main(int argc, char* argv[]) {
-    
-    if (argc != 14) {
-        SC_REPORT_ERROR("TOP", "arg count is not equal to 14");
-        return 1;
-    }
 
     cache_params params;
+    auto args = argparse::parse<test_args>(sc_core::sc_argc(), sc_core::sc_argv());
 
-    std::string verbosity_level_str = argv[1];
-    std::string test_name           = argv[2];
-    params.cache_size               = std::stoi(argv[3]);
-    params.line_size                = std::stoi(argv[4]);
-    params.set_assoc_count          = std::stoi(argv[5]);
-    params.word_size                = std::stoi(argv[6]);
-    params.write_policy             = (std::string(argv[7]) == "WRITE_THROUGH") 
-                                        ? WRITE_THROUGH 
-                                        : WRITE_BACK;
 
-    params.memory_read_delay        = std::stoi(argv[8]);
-    params.memory_write_delay       = std::stoi(argv[9]);
-    params.cache_read_delay         = std::stoi(argv[10]);
-    params.cache_write_delay        = std::stoi(argv[11]);
-    params.cache_invalidate_delay   = std::stoi(argv[12]);
+    std::string verbosity_level_str = args.verbosity_level;
+    std::string test_name           = args.test_name;
+    params.cache_size               = std::stoi(args.cache_size);
+    params.line_size                = std::stoi(args.line_size);
+    params.set_assoc_count          = std::stoi(args.set_assoc_count);
+    params.word_size                = std::stoi(args.word_size);
 
+
+    params.memory_read_delay        = std::stoi(args.memory_read_delay);
+    params.memory_write_delay       = std::stoi(args.memory_write_delay);
+    params.cache_read_delay         = std::stoi(args.cache_read_delay);
+    params.cache_write_delay        = std::stoi(args.cache_write_delay);
+    params.cache_invalidate_delay   = std::stoi(args.cache_invalidate_delay);
 
 
     sc_core::sc_report_handler::set_verbosity_level(parse_verbosity_level(verbosity_level_str));
@@ -43,7 +37,6 @@ int sc_main(int argc, char* argv[]) {
              "\n\tblock_size: "                 + std::to_string(params.line_size)              +
              "\n\tset_assoc_count: "            + std::to_string(params.set_assoc_count)        +
              "\n\tword_size: "                  + std::to_string(params.word_size)              +
-             "\n\twrite_policy: "               + argv[7]                                       +
              "\n\tmemory_read_delay: "          + std::to_string(params.memory_read_delay)      +
              "\n\tmemory_write_delay: "         + std::to_string(params.memory_write_delay)     +
              "\n\tcache_read_delay: "           + std::to_string(params.cache_read_delay)       +
@@ -53,13 +46,16 @@ int sc_main(int argc, char* argv[]) {
             sc_core::SC_MEDIUM);
 
 
-
+    printf("debug 1\n");
     test_factory* test = test_factory::create(test_name, params);
+    printf("debug 2\n");
+
     if (!test) {
         SC_REPORT_ERROR("TOP", ("Unknown test name : " + test_name).c_str());
         return 1;
     }
-    
+    printf("debug 3\n");
+
     sc_core::sc_start();
     
     delete test;

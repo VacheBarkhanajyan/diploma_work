@@ -1,12 +1,3 @@
-/*
-----------------------------------------
- Copyright (C) 2024 Grovf Inc. All Rights Reserved.
-
- Contributors:
- D.Margaryan david.m@grovf.com
------------------------------------------
-*/
-
 #ifndef CACHECONTROLLER_H
 #define CACHECONTROLLER_H
 
@@ -14,10 +5,9 @@
 #include <tlm>
 #include <vector>
 #include <list>
-#include <tlm>
 
-#include "simple_target_socket.h"
-#include "simple_initiator_socket.h"
+#include <tlm_utils/simple_target_socket.h>
+#include <tlm_utils/simple_initiator_socket.h>
 
 #include "cache_memory.h"
 #include "main_memory.h"
@@ -28,12 +18,7 @@
 class cache_controller : public sc_core::sc_module {
 
     private:
-        // TODO: mutex is a 'Mutual Exclusion' and architecture requires single-ended
-        //       blocking here not mutual. Maybe it is simpler for both implementation
-        //       and understanding if we just will put commands into some execution
-        //       queue (fifo) and merely cease fetching them during invalidation?
-        //       But if there is really mutual exclusion, it is bettter to put explanaitory
-        //       comment
+
         sc_core::sc_mutex invalidate_mutex;
         sc_core::sc_mutex flush_mutex;
 

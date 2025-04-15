@@ -1,12 +1,3 @@
-/*
-----------------------------------------
- Copyright (C) 2024 Grovf Inc. All Rights Reserved.
-
- Contributors:
- D.Margaryan david.m@grovf.com
------------------------------------------
-*/
-
 #ifndef CACHEMEMORY_H
 #define CACHEMEMORY_H
 
@@ -19,8 +10,8 @@
 #include "cache_line.h"
 #include "cache_parameters.h"
 
-#include "simple_target_socket.h"
-#include "simple_initiator_socket.h"
+#include <tlm_utils/simple_target_socket.h>
+#include <tlm_utils/simple_initiator_socket.h>
 
 class cache_memory : public sc_core::sc_module {
 
@@ -40,6 +31,7 @@ class cache_memory : public sc_core::sc_module {
         void read_word(cache_action_params &op) const;
         void write_word(cache_action_params &op);
 
+        int get_cache_write_policy() const;
         int get_cache_line_size() const;
         int get_cache_set_assoc_count() const;
         int get_cache_word_size() const;

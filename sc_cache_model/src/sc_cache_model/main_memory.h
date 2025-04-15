@@ -1,14 +1,3 @@
-/*
-----------------------------------------
- Copyright (C) 2024 Grovf Inc. All Rights Reserved.
-
- Contributors:
- D.Margaryan david.m@grovf.com
------------------------------------------
-*/
-
-
-
 #ifndef MAIN_MEMORY_H
 #define MAIN_MEMORY_H
 
@@ -18,8 +7,8 @@
 #include <unordered_map>
 #include <memory>
 #include <tlm>
-#include "simple_target_socket.h"
-#include "simple_initiator_socket.h"
+#include <tlm_utils/simple_target_socket.h>
+#include <tlm_utils/simple_initiator_socket.h>
 
 const size_t PAGE_SIZE = 4096;
 

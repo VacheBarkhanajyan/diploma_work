@@ -84,16 +84,20 @@ void cache_controller::handle_flush_request() {
 
 
 void cache_controller::handle_write_request(tlm::tlm_generic_payload* gp) {
+    
 
     uint64_t address = gp->get_address();    
+    
 
     uint64_t block_address = (address / cache_mem.get_cache_line_size()) * cache_mem.get_cache_line_size();
     uint32_t index = (block_address / cache_mem.get_cache_line_size()) % cache_mem.get_cache_sets_count();
     uint64_t tag = block_address / (cache_mem.get_cache_line_size() * cache_mem.get_cache_sets_count());
     uint32_t word_offset = (address % cache_mem.get_cache_line_size());
 
+
     cache_optional_fields_extension* extension;
     gp->get_extension(extension);
+    
 
     cache_action_params op = {
         .set_index = index,
@@ -108,7 +112,9 @@ void cache_controller::handle_write_request(tlm::tlm_generic_payload* gp) {
         .line_alloc = get_write_request_line_alloc(extension->cache)
     };
 
+
     ongoing_requests[index][tag] = true;
+
 
     SC_REPORT_INFO_VERB(
             "CACHE_CTRL/WRITE",
@@ -427,6 +433,7 @@ void cache_controller::update_lru(int set_index, int way_index) {
 WRITE_POLICY cache_controller::get_write_policy(int value) {
 
     int last_two_bits = value & 0b11;
+
     int first_two_bits = (value >> 2) & 0b11;
 
 
@@ -510,6 +517,7 @@ void cache_controller::read() {
         flush_mutex.unlock();
 
         handle_read_request(gp);
+        print_cache(gp->get_address());
         read_rsp_fifo.put(gp);
     }
 }
@@ -526,8 +534,14 @@ void cache_controller::write() {
         flush_mutex.lock();
         flush_mutex.unlock();
 
+        
+
         handle_write_request(gp);
+    
+        print_cache(gp->get_address());
         write_rsp_fifo.put(gp);
+        
+
     }
 
 }

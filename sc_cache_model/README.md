@@ -4,13 +4,13 @@
 ```
 
 cd diploma_work/sc_cache_model/run
-module load module load systemc-3.0.1.tcl
+module load systemc-3.0.1.tcl
 make -j
 make run
 
 or use 
 
-make run VERBOSITY_LEVEL= "SC_HIGH"
+make run VERBOSITY_LEVEL="SC_HIGH"
 
 # cmd line args/default args
 
